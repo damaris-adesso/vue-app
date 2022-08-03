@@ -10,8 +10,8 @@ interface PostsState {
   selectedPeriod: Period;
 }
 
-function delay (){
-  return new Promise<void>(res => setTimeout(res, 1500))
+function delay() {
+  return new Promise<void>((res) => setTimeout(res, 1500));
 }
 
 export const usePosts = defineStore("posts", {
@@ -29,7 +29,7 @@ export const usePosts = defineStore("posts", {
     async fetchPosts() {
       const res = await window.fetch("http://localhost:8000/posts");
       const data = (await res.json()) as PostI[];
-      await delay()
+      await delay();
       const ids: string[] = [];
       const all = new Map<string, PostI>();
       for (const post of data) {
@@ -39,6 +39,17 @@ export const usePosts = defineStore("posts", {
 
       this.ids = ids;
       this.all = all;
+    },
+
+    createPost(post: TimelinePost) {
+      const body = JSON.stringify({ ...post, created: post.created.toISO() });
+      return window.fetch("http://localhost:8000/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body,
+      });
     },
   },
 
