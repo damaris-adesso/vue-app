@@ -23,7 +23,7 @@ function handleInput(e: Event) {
     <label :for="name" class="label">{{ name }}</label>
     <div class="control">
       <input
-        type="type"
+        :type="type"
         :id="name"
         class="input"
         :value="modelValue"
