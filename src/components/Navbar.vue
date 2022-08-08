@@ -6,6 +6,7 @@ import { useUsers } from "../stores/users";
 const modal = useModal();
 const usersStore = useUsers();
 const router = useRouter();
+
 async function logout() {
   await usersStore.logout();
   router.push({ path: "/" });
